@@ -59,6 +59,8 @@ details p{margin:0 0 14px;color:var(--muted);font-size:15px}
   border:1px solid var(--ink);background:var(--ink);color:var(--page);padding:13px 16px;margin-top:14px}
 .btn.ghost{background:transparent;color:var(--ink)}
 .btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.btn .bi{height:16px;width:auto;vertical-align:-2px;margin-right:9px}
+.btn + .btn{margin-top:10px}
 .note{font-size:13px;color:var(--muted);text-align:center;margin:8px 0 0}
 .center{text-align:center}
 .choices{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
@@ -67,9 +69,16 @@ details p{margin:0 0 14px;color:var(--muted);font-size:15px}
 .answer{margin-top:14px;padding:16px 18px;background:var(--card);border:1px solid var(--rule);font-size:15px}
 .answer[hidden]{display:none}
 .tag{font-size:20px;font-weight:500;letter-spacing:.03em}
-.sns{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 24px;margin-top:12px;font-size:14px}
-.sns span{display:inline-flex;align-items:center;gap:7px}
-.sns img{height:16px;width:auto}
+.sub{font-family:var(--min);font-weight:600;font-size:15px;letter-spacing:.08em;text-align:center;margin:30px 0 6px}
+.accounts{list-style:none;padding:0;margin:0}
+.accounts li{border-top:1px solid var(--rule)}
+.accounts li:last-child{border-bottom:1px solid var(--rule)}
+.accounts a{display:flex;align-items:center;gap:12px;padding:12px 2px;text-decoration:none}
+.accounts .ic{width:22px;display:flex;justify-content:center;flex:none}
+.accounts .ic img{height:18px;width:auto}
+.accounts .name{font-weight:500}
+.accounts .handle{margin-left:auto;color:var(--muted);font-size:13px}
+.accounts a::after{content:"›";color:var(--accent);font-size:18px;line-height:1;margin-left:6px}
 footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);text-align:center;font-size:13px;color:var(--muted)}
 </style>
 </head>
@@ -153,11 +162,16 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);text-al
 <section id="sns">
   <h2>SNSで、ひとこと</h2>
   <p class="center tag">#FABOXERBRIEF</p>
-  <a class="btn ghost" href="https://twitter.com/intent/tweet?hashtags=FABOXERBRIEF" target="_blank" rel="noopener">Xで投稿する</a>
-  <div class="sns" aria-label="公式アカウント">
-    <span><img src="assets/ig-mono.png" alt="Instagram"><img src="assets/yt-mono.png" alt="YouTube" style="height:12px">@not_official2022</span>
-    <span><img src="assets/x-black.png" alt="X" style="height:14px">@notofficial2022</span>
-  </div>
+  <a class="btn ghost" id="post-x" href="https://twitter.com/intent/tweet?hashtags=FABOXERBRIEF" target="_blank" rel="noopener"><img class="bi" src="assets/x-black.png" alt="">Xで投稿する</a>
+  <a class="btn ghost" id="post-ig" href="https://www.instagram.com/" target="_blank" rel="noopener"><img class="bi" src="assets/ig-mono.png" alt="">Instagramで投稿する</a>
+  <p class="note" id="ig-status" aria-live="polite">Instagramは、ハッシュタグをコピーして開きます。<br>投稿の文に貼り付けてください。</p>
+
+  <p class="sub">公式アカウント</p>
+  <ul class="accounts">
+    <li><a href="https://www.instagram.com/not_official2022/" target="_blank" rel="noopener" data-sns="instagram"><span class="ic"><img src="assets/ig-mono.png" alt=""></span><span class="name">Instagram</span><span class="handle">@not_official2022</span></a></li>
+    <li><a href="https://www.youtube.com/@not_official2022" target="_blank" rel="noopener" data-sns="youtube"><span class="ic"><img src="assets/yt-mono.png" alt="" style="height:14px"></span><span class="name">YouTube</span><span class="handle">@not_official2022</span></a></li>
+    <li><a href="https://x.com/notofficial2022" target="_blank" rel="noopener" data-sns="x"><span class="ic"><img src="assets/x-black.png" alt="" style="height:16px"></span><span class="name">X</span><span class="handle">@notofficial2022</span></a></li>
+  </ul>
 </section>
 
 <footer>
@@ -172,6 +186,50 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);text-al
     b.addEventListener('click', function () {
       document.querySelectorAll('.choices button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
       document.querySelectorAll('.answer').forEach(function (a) { a.hidden = a.id !== b.dataset.target; });
+    });
+  });
+
+  // 文字列をクリップボードへ（https では Clipboard API、使えない環境では execCommand で代替）
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '0';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy') ? resolve() : reject(new Error('copy failed')); }
+      catch (e) { reject(e); }
+      finally { document.body.removeChild(ta); }
+    });
+  }
+
+  // Xで投稿する：ハッシュタグ入りの投稿画面を開く（文面は指定しない）
+  document.getElementById('post-x').addEventListener('click', function () {
+    gtag('event', 'sns_post', { platform: 'x' });
+  });
+
+  // Instagramで投稿する：Instagramには投稿画面を外から開く仕組みがないため、
+  // ハッシュタグをコピーしてからInstagramを開く（アプリがあればアプリで開く）
+  document.getElementById('post-ig').addEventListener('click', function () {
+    var status = document.getElementById('ig-status');
+    copyText('#FABOXERBRIEF').then(function () {
+      status.textContent = '「#FABOXERBRIEF」をコピーしました。Instagramの投稿の文に貼り付けてください。';
+    }).catch(function () {
+      status.textContent = 'コピーできませんでした。上の #FABOXERBRIEF を長押ししてコピーしてください。';
+    });
+    gtag('event', 'sns_post', { platform: 'instagram' });
+  });
+
+  // 公式アカウントへのリンク
+  document.querySelectorAll('.accounts a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      gtag('event', 'sns_profile', { platform: a.dataset.sns });
     });
   });
 </script>
