@@ -35,7 +35,7 @@ a{color:inherit}
 .frame{border:1px solid var(--accent);outline:1px solid rgba(140,106,67,.45);outline-offset:-5px;padding:30px 22px 34px;background:var(--page)}
 header{text-align:center}
 header img{height:20px;width:auto}
-h1{font-family:var(--min);font-weight:600;font-size:24px;line-height:1.6;letter-spacing:.06em;margin:18px 0 6px}
+h1{font-family:var(--min);font-weight:600;font-size:min(24px, calc((100vw - 96px) / 14.2));line-height:1.6;letter-spacing:.06em;margin:18px 0 6px;white-space:nowrap}
 .lead{color:var(--muted);font-size:14px;margin:0}
 nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:20px 0 4px}
 nav a{font-size:13px;text-decoration:none;border:1px solid var(--rule);border-radius:999px;padding:4px 12px;background:var(--card)}
@@ -87,7 +87,7 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);text-al
 
 <header>
   <img src="assets/logo.png" alt="≠not">
-  <h1>履き方に迷ったら、<br>ここから。</h1>
+  <h1>FA BOXER BRIEFの履き方</h1>
   <p class="lead">FA BOXER BRIEF をお使いの方へ</p>
   <nav aria-label="このページの内容">
     <a href="#video">履き方の動画</a><a href="#help">困ったとき</a><a href="#voice">感想を送る</a><a href="#review">レビューのご案内</a><a href="#sns">SNS</a>
@@ -160,7 +160,7 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);text-al
 </section>
 
 <section id="sns">
-  <h2>SNSで、ひとこと</h2>
+  <h2>SNSでひとこと</h2>
   <p class="center tag">#FABOXERBRIEF</p>
   <a class="btn ghost" id="post-x" href="https://twitter.com/intent/tweet?hashtags=FABOXERBRIEF" target="_blank" rel="noopener"><img class="bi" src="assets/x-black.png" alt="">Xで投稿する</a>
   <a class="btn ghost" id="post-ig" href="https://www.instagram.com/" target="_blank" rel="noopener"><img class="bi" src="assets/ig-mono.png" alt="">Instagramで投稿する</a>
@@ -169,8 +169,8 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);text-al
   <p class="sub">公式アカウント</p>
   <ul class="accounts">
     <li><a href="https://www.instagram.com/not_official2022/" target="_blank" rel="noopener" data-sns="instagram"><span class="ic"><img src="assets/ig-mono.png" alt=""></span><span class="name">Instagram</span><span class="handle">@not_official2022</span></a></li>
-    <li><a href="https://www.youtube.com/@not_official2022" target="_blank" rel="noopener" data-sns="youtube"><span class="ic"><img src="assets/yt-mono.png" alt="" style="height:14px"></span><span class="name">YouTube</span><span class="handle">@not_official2022</span></a></li>
     <li><a href="https://x.com/notofficial2022" target="_blank" rel="noopener" data-sns="x"><span class="ic"><img src="assets/x-black.png" alt="" style="height:16px"></span><span class="name">X</span><span class="handle">@notofficial2022</span></a></li>
+    <li><a href="https://www.youtube.com/@not_official2022" target="_blank" rel="noopener" data-sns="youtube"><span class="ic"><img src="assets/yt-mono.png" alt="" style="height:14px"></span><span class="name">YouTube</span><span class="handle">@not_official2022</span></a></li>
   </ul>
 </section>
 
