@@ -6,6 +6,17 @@
 <title>FA BOXER BRIEF ご案内｜not株式会社</title>
 <meta name="description" content="FA BOXER BRIEFの履き方の動画、困ったときのご案内、感想の受付。">
 <meta name="robots" content="noindex">
+<!-- Google Analytics（GA4・FABBガイド）。説明書のQR（?src=card）からの来訪を qr_scan として数える -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F70GVWCPNT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F70GVWCPNT');
+  if (new URLSearchParams(location.search).get('src') === 'card') {
+    gtag('event', 'qr_scan', { qr_source: 'card' });
+  }
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
@@ -119,8 +130,7 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);text-al
 <section id="voice">
   <h2>感想を送る（30秒）</h2>
   <p class="center">良かった点も、合わなかった点も。<br>次の一枚の設計に活かします。</p>
-  <!-- TODO: Googleフォームを作成したら href を差し替え、aria-disabled を外す -->
-  <a class="btn" href="#" aria-disabled="true" data-todo="survey-url">感想を送る</a>
+  <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSdIQxfeiG0lEggZ6dZZxbg5ABas-OV8W5Gab_tkCc_GOZPcHg/viewform" target="_blank" rel="noopener">感想を送る</a>
   <p class="note">いただいた内容は商品づくりに使います。</p>
 </section>
 
@@ -152,6 +162,7 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);text-al
 
 <footer>
   not株式会社　お客様窓口：<a href="mailto:not@nothd.jp">not@nothd.jp</a>
+  <p style="margin:8px 0 0;font-size:12px">このページは、利用状況の把握のためGoogleアナリティクスを使っています。</p>
 </footer>
 
 </div></div>
